@@ -1,10 +1,21 @@
 {
-  "devDependencies": {
-    "@types/readline-sync": "^1.4.8",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+  "name": "atividade-type-media",
+  "version": "1.0.0",
+  "description": "Sistema de boletim escolar com TypeScript, TXT e CSV",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

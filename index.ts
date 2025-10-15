@@ -1,72 +1,116 @@
 import * as rs from "readline-sync";
+import * as fs from "fs";
+import * as path from "path";
 
 interface Aluno {
   nome: string;
   serie: string;
   presenca: number;
-  materias: Record<string, number>; // nome da matéria -> média final
+  materias: Record<string, number>;
+  aprovado: boolean;
 }
 
-// === Passo 1: Coleta de informações básicas ===
-const nome: string = rs.question("1) Nome do Aluno: ").trim();
-const serie: string = rs.question("2) Qual é a sua série: ").trim();
+// Lista de matérias
+const materias = ["Matematica", "Portugues", "Geografia", "Historia", "Quimica"];
 
-// === Passo 2: Frequência ===
-const totalAulas: number = Number(rs.question("3) Total de aulas no período: "));
-const faltas: number = Number(rs.question("4) Quantas aulas o aluno faltou: "));
-const presenca: number = ((totalAulas - faltas) / totalAulas) * 100;
-
-// === Passo 3: Coleta das notas ===
-const materias = ["Matemática", "Português", "Geografia", "História", "Química"];
-const notasPorMateria: Record<string, number> = {};
-
-for (const materia of materias) {
+// Função para coletar notas de uma matéria
+function coletarNotas(materia: string): number {
   console.log(`\n=== ${materia.toUpperCase()} ===`);
   let soma = 0;
-
   for (let i = 1; i <= 8; i++) {
-    const nota = Number(rs.question(`Nota ${i}: `));
+    let nota: number;
+    do {
+      nota = Number(rs.question(`Nota ${i} (0 a 10): `));
+    } while (isNaN(nota) || nota < 0 || nota > 10);
     soma += nota;
   }
-
-  const media = soma / 8;
-  notasPorMateria[materia] = media;
+  return soma / 8;
 }
 
-// === Passo 4: Montagem do objeto aluno ===
+// Função para criar boletim TXT
+function gerarBoletim(aluno: Aluno) {
+  let conteudo = `BOLETIM FINAL\nAluno: ${aluno.nome}\nSérie: ${aluno.serie}\nPresença: ${aluno.presenca.toFixed(2)}%\n\n`;
+  conteudo += "--- MÉDIAS DAS MATÉRIAS ---\n";
+
+  for (const materia of materias) {
+    const media = aluno.materias[materia];
+    const status = media >= 7 ? "APROVADO" : "REPROVADO";
+    conteudo += `${materia}: ${media.toFixed(2)} - ${status}\n`;
+  }
+
+  conteudo += aluno.aprovado ? "\n🎓 RESULTADO FINAL: APROVADO NO ANO!\n" : "\n📘 RESULTADO FINAL: REPROVADO NO ANO!\n";
+
+  const arquivoTXT = path.join(__dirname, `boletim_${aluno.nome.replace(/\s+/g, "_")}.txt`);
+  fs.writeFileSync(arquivoTXT, conteudo);
+  console.log(`\n📄 Boletim salvo em: ${arquivoTXT}`);
+}
+
+// Função para salvar aluno no CSV
+function salvarAlunoCSV(aluno: Aluno) {
+  const arquivoCSV = path.join(__dirname, "alunos.csv");
+  const existe = fs.existsSync(arquivoCSV);
+  const cabecalho = "Nome,Série,Presenca,Matematica,Portugues,Geografia,Historia,Quimica,Aprovado\n";
+
+  const linha = `${aluno.nome},${aluno.serie},${aluno.presenca.toFixed(2)},${aluno.materias["Matematica"].toFixed(2)},${aluno.materias["Portugues"].toFixed(2)},${aluno.materias["Geografia"].toFixed(2)},${aluno.materias["Historia"].toFixed(2)},${aluno.materias["Quimica"].toFixed(2)},${aluno.aprovado ? "APROVADO" : "REPROVADO"}\n`;
+
+  if (!existe) {
+    fs.writeFileSync(arquivoCSV, cabecalho + linha);
+  } else {
+    fs.appendFileSync(arquivoCSV, linha);
+  }
+}
+
+// === Programa principal ===
+console.log("=== SISTEMA DE BOLETIM ESCOLAR ===\n");
+
+const nome = rs.question("1) Nome do Aluno: ").trim();
+const serie = rs.question("2) Qual e a sua serie: ").trim();
+
+// Frequência
+const totalAulas = Number(rs.question("3) Total de aulas no ano: "));
+let faltas: number;
+do {
+  faltas = Number(rs.question("4) Total de faltas do aluno: "));
+} while (isNaN(faltas) || faltas < 0 || faltas > totalAulas);
+
+const presenca = ((totalAulas - faltas) / totalAulas) * 100;
+
+// Coleta de notas
+const notasPorMateria: Record<string, number> = {};
+for (const materia of materias) {
+  notasPorMateria[materia] = coletarNotas(materia);
+}
+
+// Verificar aprovação
+let aprovadoEmTudo = presenca >= 75;
+for (const materia of materias) {
+  if (notasPorMateria[materia] < 7) aprovadoEmTudo = false;
+}
+
 const aluno: Aluno = {
   nome,
   serie,
   presenca,
-  materias: notasPorMateria
+  materias: notasPorMateria,
+  aprovado: aprovadoEmTudo,
 };
 
-// === Passo 5: Exibição dos resultados ===
+// Mostrar boletim no console
 console.log("\n=== BOLETIM FINAL ===");
-console.log(`Aluno : ${aluno.nome}`);
-console.log(`Série : ${aluno.serie}`);
+console.log(`Aluno: ${aluno.nome}`);
+console.log(`Série: ${aluno.serie}`);
 console.log(`Presença: ${aluno.presenca.toFixed(2)}%`);
 
-if (aluno.presenca >= 75) {
-  console.log("Frequência: ✅ Aprovado por presença");
-} else {
-  console.log("Frequência: ❌ Reprovado por faltas");
-}
-
-console.log("\n--- MÉDIAS DAS MATÉRIAS ---");
-let aprovadoEmTudo = true;
-
 for (const materia of materias) {
-  const media = aluno.materias[materia] ?? 0;
+  const media = aluno.materias[materia];
   const status = media >= 7 ? "✅ Aprovado" : "❌ Reprovado";
   console.log(`${materia}: ${media.toFixed(2)} - ${status}`);
-  if (media < 7) aprovadoEmTudo = false;
 }
 
+console.log(aluno.aprovado ? "\n🎓 RESULTADO FINAL: APROVADO NO ANO!" : "\n📘 RESULTADO FINAL: REPROVADO NO ANO!");
 
-// === Passo 6: Resultado final ===
-if (aluno.presenca >= 75 && aprovadoEmTudo) {
-  console.log("\n🎓 Resultado final: ✅ APROVADO NO ANO!");
-} else {
-  console.log("\n📘 Resultado final: ❌ REPROVADO NO ANO!");
-}
+// Salvar boletim TXT
+gerarBoletim(aluno);
+
+// Salvar aluno no CSV
+salvarAlunoCSV(aluno);
