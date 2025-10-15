@@ -160,5 +160,3 @@ node dist/index.js
 
 ```
 
----
-
