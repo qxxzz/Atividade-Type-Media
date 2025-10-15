@@ -158,5 +158,4 @@ node dist/index.js
 * `boletim_NomeAluno.txt` → Boletim individual do aluno
 * `alunos.csv` → Lista com todos os alunos cadastrados e suas médias
 
-```
 
