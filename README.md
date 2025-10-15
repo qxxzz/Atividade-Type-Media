@@ -1,8 +1,3 @@
-
-
----
-
-````markdown
 # Sistema de Boletim Escolar em TypeScript
 
 **Autores:**
