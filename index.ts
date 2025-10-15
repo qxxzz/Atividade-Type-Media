@@ -17,15 +17,29 @@ const materias = ["Matematica", "Portugues", "Geografia", "Historia", "Quimica"]
 function coletarNotas(materia: string): number {
   console.log(`\n=== ${materia.toUpperCase()} ===`);
   let soma = 0;
-  for (let i = 1; i <= 8; i++) {
+
+  // Notas dos trabalhos (1 a 4)
+  for (let i = 1; i <= 4; i++) {
     let nota: number;
     do {
-      nota = Number(rs.question(`Nota ${i} (0 a 10): `));
+      nota = Number(rs.question(`Trabalho ${i} (0 a 10): `));
     } while (isNaN(nota) || nota < 0 || nota > 10);
     soma += nota;
   }
-  return soma / 8;
+
+  // Notas das provas (5 a 8)
+  for (let i = 5; i <= 8; i++) {
+    let nota: number;
+    do {
+      nota = Number(rs.question(`Prova ${i - 4} (0 a 10): `));
+    } while (isNaN(nota) || nota < 0 || nota > 10);
+    soma += nota;
+  }
+
+  const media = soma / 8;
+  return media;
 }
+
 
 // Função para criar boletim TXT
 function gerarBoletim(aluno: Aluno) {
@@ -38,11 +52,11 @@ function gerarBoletim(aluno: Aluno) {
     conteudo += `${materia}: ${media.toFixed(2)} - ${status}\n`;
   }
 
-  conteudo += aluno.aprovado ? "\n🎓 RESULTADO FINAL: APROVADO NO ANO!\n" : "\n📘 RESULTADO FINAL: REPROVADO NO ANO!\n";
+  conteudo += aluno.aprovado ? "\n🎓 RESULTADO FINAL: APROVADO NO ANO!\n" : "\n RESULTADO FINAL: REPROVADO NO ANO!\n";
 
   const arquivoTXT = path.join(__dirname, `boletim_${aluno.nome.replace(/\s+/g, "_")}.txt`);
   fs.writeFileSync(arquivoTXT, conteudo);
-  console.log(`\n📄 Boletim salvo em: ${arquivoTXT}`);
+  console.log(`\n Boletim salvo em: ${arquivoTXT}`);
 }
 
 // Função para salvar aluno no CSV
@@ -103,11 +117,11 @@ console.log(`Presença: ${aluno.presenca.toFixed(2)}%`);
 
 for (const materia of materias) {
   const media = aluno.materias[materia];
-  const status = media >= 7 ? "✅ Aprovado" : "❌ Reprovado";
+  const status = media >= 7 ? " Aprovado" : " Reprovado";
   console.log(`${materia}: ${media.toFixed(2)} - ${status}`);
 }
 
-console.log(aluno.aprovado ? "\n🎓 RESULTADO FINAL: APROVADO NO ANO!" : "\n📘 RESULTADO FINAL: REPROVADO NO ANO!");
+console.log(aluno.aprovado ? "\n🎓 RESULTADO FINAL: APROVADO NO ANO!" : "\n RESULTADO FINAL: REPROVADO NO ANO!");
 
 // Salvar boletim TXT
 gerarBoletim(aluno);

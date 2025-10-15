@@ -1,0 +1,13 @@
+BOLETIM FINAL
+Aluno: Caio
+Série: 1�S�rie
+Presença: 86.30%
+
+--- MÉDIAS DAS MATÉRIAS ---
+Matematica: 9.00 - APROVADO
+Portugues: 9.00 - APROVADO
+Geografia: 9.00 - APROVADO
+Historia: 9.00 - APROVADO
+Quimica: 9.00 - APROVADO
+
+🎓 RESULTADO FINAL: APROVADO NO ANO!

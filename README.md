@@ -1,107 +1,98 @@
 
-# Sistema de Pizzaria em TypeScript
 
-João Pedro de Andrade Silva – 2508650
+---
 
-Caio Zanffolim Cunha – 2509
+````markdown
+# Sistema de Boletim Escolar em TypeScript
+
+**Autores:**
+
+* João Pedro de Andrade Silva – 2508650
+* Caio Zanffolim Cunha – 2509832
 
 ## 1. Introdução
 
-Este projeto implementa um **Sistema de Pizzaria completo** em **TypeScript**, utilizando **Node.js**.
-Ele oferece funcionalidades essenciais para o gerenciamento de uma pizzaria, como:
-***cadastro de clientes***, ***produtos***, ***pedidos***, ***emissão de comprovantes*** e ***relatórios de vendas***.
+Este projeto implementa um **Sistema de Boletim Escolar** em **TypeScript** com **Node.js**.
+O sistema coleta informações de alunos, faltas e notas, calcula médias, verifica aprovação e gera:
+
+* **Boletim individual em TXT**
+* **Registro de alunos em CSV**
+
+---
 
 ## 2. Pré-requisitos
 
-Antes de executar o sistema, é necessário ter instalado em seu computador:
+Antes de executar o sistema, é necessário ter instalado:
 
 * **Node.js**
 * **VS Code** (ou outro editor de sua preferência)
 * **npm** (gerenciador de pacotes do Node.js)
+
+---
 
 ## 3. Tecnologias Utilizadas
 
 * **TypeScript**
 * **Node.js**
 * **CSV**
-* **GitHub**
+* **Sistema de arquivos (TXT)**
+
+---
 
 ## 4. Estrutura do Projeto
 
 ```bash
-├─ data/
-│  ├─ recibos/        # Recibos de pedidos gerados automaticamente
-│  ├─ clientes.csv    # Base de dados dos clientes
-│  ├─ pedidos.csv     # Base de dados dos pedidos
-│  └─ produtos.csv    # Base de dados dos produtos
-├─dist/
-│  └─ index.js
-├─ node_modules/      # Dependências do projeto
-├─ src/
-│  └─ index.ts        # Código principal do sistema
-├─ package.json       # Dependências e scripts do Node.js
-├─ package-lock.json  # Controle de versões das dependências
-├─ tsconfig.json      # Configuração do TypeScript
-└─ README.md          # Manual de utilização e informações do projeto
-```
-
-## 5. Recursos do Sistema
-
-* **Entrada:** nome, telefone, endereço, complemento e forma de pagamento.
-* **Armazenamento:** `data/clientes.csv`, `data/pedidos.csv`, `data/produtos.csv` e arquivos individuais `data/pedido_*.txt`.
-* **Saída:** data, cliente, telefone, endereço, forma de pagamento, total, entrega e itens do pedido.
-* **Relatórios:** vendas, lista de produtos, lista de clientes e histórico de pedidos por cliente.
-* **Funcionalidade adicional:** criação automática de pastas e arquivos na primeira execução.
-
-## 6. Comandos de Instalação
-
-Para instalar e configurar o projeto corretamente, execute os seguintes comandos:
+Atividade-Type-Media/
+├─ dist/
+│  ├─ index.js           # Arquivo compilado do TypeScript
+│  ├─ alunos.csv         # Base de dados dos alunos
+│  └─ boletim_Nome.txt   # Boletim individual
+├─ node_modules/         # Dependências do projeto
+├─ index.ts              # Código principal do sistema
+├─ package.json          # Dependências e scripts do Node.js
+├─ package-lock.json     # Controle de versões das dependências
+├─ tsconfig.json         # Configuração do TypeScript
+└─ README.md             # Manual de utilização e informações do projeto
+````
 
 ---
 
-| Comando | Explicação |
-|---------|------------|
-| `mkdir Type-Sistema-Pizzaria` | Criar pasta |
-| `cd Type-Sistema-Pizzaria` | Entrar na pasta |
-| `mkdir src` | Criar pasta |
-| `mkdir data` | Criar pasta |
-| `cd data` | Entrar na pasta |
-| `touch clientes.csv` | Criar o arquivo `clientes.csv` |
-| `touch pedidos.csv` | Criar o arquivo `pedidos.csv` |
-| `touch produtos.csv` | Criar o arquivo `produtos.csv` |
-| `cd ..` | Sair da pasta |
-| `npm i -g typescript` | Instalar TypeScript |
-| `npx tsc --init` | Criar `tsconfig.json` |
-| `npm i -D typescript ts-node @types/node` | Instale os tipos do Node e ajuste o `tsconfig` na raiz |
-| `cd src` | Criar pasta |
-| `touch index.ts` | Criar o arquivo `index.ts` |
-| `cd ..` | Sair da pasta |
-| `tsc index.ts` | Transpile o `index.ts` para `index.js` |
+## 5. Funcionalidades do Sistema
 
+* **Entrada:** nome, série, total de aulas, faltas e notas (trabalhos e provas).
+* **Cálculos:** presença (%) e média de cada matéria.
+* **Aprovação:** presença mínima de 75% e nota mínima 7 por matéria.
+* **Saída:** boletim individual em TXT, com status aprovado/reprovado.
+* **Armazenamento:** todos os alunos registrados no `alunos.csv`.
 
+---
 
-## 7. Instalação
-
-Na raiz do projeto, execute:
+## 6. Comandos de Instalação e Configuração
 
 ```bash
-npm i -D typescript ts-node @types/node
+# Instalar dependências
+npm install
+
+# Compilar o TypeScript para JavaScript
+npm run build
 ```
 
-Crie ou verifique os scripts em `package.json`:
+---
+
+## 7. package.json recomendado
 
 ```json
 {
-  "name": "type-sistema-pizzaria",
+  "name": "atividade-type-media",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node src/index.ts"
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@types/node": "^24.5.1",
     "readline-sync": "^1.4.10",
@@ -111,60 +102,68 @@ Crie ou verifique os scripts em `package.json`:
 }
 ```
 
-Configuração mínima recomendada para `tsconfig.json`:
+---
+
+## 8. tsconfig.json recomendado
 
 ```json
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2022",
     "module": "CommonJS",
-    "rootDir": "src",
-    "outDir": "dist",
+    "rootDir": "./",
+    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./**/*.ts"]
 }
 ```
 
-## 8. Como executar
+---
+
+## 9. Como Executar
 
 No terminal, dentro da pasta raiz do projeto:
 
 ```bash
+# Rodar o programa compilado
 npm start
 ```
-OU
+
+Ou diretamente com Node:
+
 ```bash
 node dist/index.js
 ```
+
 ---
 
-## 9. Build para Produção
+## 10. Build para Produção
 
-Para gerar os arquivos JavaScript prontos para execução sem o `ts-node`:
+Para gerar os arquivos JavaScript prontos:
 
 ```bash
-npx tsc
+npm run build
 ```
 
-Isso criará os arquivos compilados na pasta `dist/`.
-
-Em seguida, você pode executar diretamente com o Node:
+* Isso criará os arquivos compilados na pasta `dist/`.
+* Em seguida, execute com Node:
 
 ```bash
 node dist/index.js
 ```
 
-## 10. Diagrama 1 do projeto
+---
 
-<img width="1760" height="1360" alt="image" src="https://github.com/user-attachments/assets/e10ada99-537c-4dbb-8ac4-0b6e111f984b" />
+## 11. Estrutura de arquivos gerados pelo programa
 
-## 10. Diagrama 2 do projeto
+* `boletim_NomeAluno.txt` → Boletim individual do aluno
+* `alunos.csv` → Lista com todos os alunos cadastrados e suas médias
 
-<img width="1760" height="1360" alt="image" src="https://github.com/user-attachments/assets/beeb61b5-64c3-448d-af15-cfe95060024e" />
+```
 
+---
 
-
-
- 
