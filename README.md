@@ -8,10 +8,6 @@
 ## 1. Introdução
 
 Este projeto implementa um **Sistema de Boletim Escolar** em **TypeScript** com **Node.js**.
-O sistema coleta informações de alunos, faltas e notas, calcula médias, verifica aprovação e gera:
-
-* **Boletim individual em TXT**
-* **Registro de alunos em CSV**
 
 ---
 
