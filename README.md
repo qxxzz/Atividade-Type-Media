@@ -15,18 +15,21 @@ Este projeto implementa um **Sistema de Boletim Escolar** em **TypeScript** com 
 
 Antes de executar o sistema, é necessário ter instalado:
 
+* **Docker Desktop**
+* **pgAdmin 4**
 * **Node.js**
-* **VS Code** (ou outro editor de sua preferência)
-* **npm** (gerenciador de pacotes do Node.js)
-
+* **VS Code** 
+* **npm**
+  
 ---
 
 ## 3. Tecnologias Utilizadas
 
 * **TypeScript**
 * **Node.js**
-* **CSV**
-* **Sistema de arquivos (TXT)**
+* **pgAdmin 4**
+* **Docker**
+* **Banco de Dados**
 
 ---
 
