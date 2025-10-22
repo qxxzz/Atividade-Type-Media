@@ -8,6 +8,10 @@
 ## 1. Introdução
 
 Este projeto implementa um **Sistema de Boletim Escolar** em **TypeScript** com **Node.js**.
+O sistema coleta informações de alunos, faltas e notas, calcula médias, verifica aprovação e gera:
+
+* **Boletim individual em TXT**
+* **Registro de alunos em CSV**
 
 ---
 
@@ -15,21 +19,18 @@ Este projeto implementa um **Sistema de Boletim Escolar** em **TypeScript** com 
 
 Antes de executar o sistema, é necessário ter instalado:
 
-* **Docker Desktop**
-* **pgAdmin 4**
 * **Node.js**
-* **VS Code** 
-* **npm**
-  
+* **VS Code** (ou outro editor de sua preferência)
+* **npm** (gerenciador de pacotes do Node.js)
+
 ---
 
 ## 3. Tecnologias Utilizadas
 
 * **TypeScript**
 * **Node.js**
-* **pgAdmin 4**
-* **Docker**
-* **Banco de Dados**
+* **CSV**
+* **Sistema de arquivos (TXT)**
 
 ---
 
